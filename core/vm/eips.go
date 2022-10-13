@@ -86,7 +86,7 @@ func opSelfBalance(pc *uint64, interpreter *EVMInterpreter, scope *ScopeContext)
 }
 
 // enable1344 applies EIP-1344 (ChainID Opcode)
-// - Adds an opcode that returns the current chain?™s EIP-155 unique identifier
+// - Adds an opcode that returns the current chainâ€™s EIP-155 unique identifier
 func enable1344(jt *JumpTable) {
 	// New opcode
 	jt[CHAINID] = &operation{
@@ -99,13 +99,12 @@ func enable1344(jt *JumpTable) {
 
 // opChainID implements CHAINID opcode
 func opChainID(pc *uint64, interpreter *EVMInterpreter, scope *ScopeContext) ([]byte, error) {
-
 	if interpreter.evm.chainConfig.IsEthPoWFork(interpreter.evm.Context.BlockNumber) {
 		chainId, _ := uint256.FromBig(interpreter.evm.chainConfig.ChainID_ALT)
 		scope.Stack.push(chainId)
 	} else {
-	chainId, _ := uint256.FromBig(interpreter.evm.chainConfig.ChainID)
-	scope.Stack.push(chainId)
+		chainId, _ := uint256.FromBig(interpreter.evm.chainConfig.ChainID)
+		scope.Stack.push(chainId)
 	}
 	return nil, nil
 }
